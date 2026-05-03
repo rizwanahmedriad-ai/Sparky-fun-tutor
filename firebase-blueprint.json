@@ -1,0 +1,29 @@
+{
+  "entities": {
+    "UserProgress": {
+      "title": "User Progress",
+      "description": "Stores the child's learning progress, hearts, stars, and missed questions.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "hearts": { "type": "integer", "description": "Remaining lives (max 3)." },
+        "stars": { "type": "integer", "description": "Total stars collected." },
+        "wrongAnswers": { 
+          "type": "array", 
+          "items": { "type": "object" },
+          "description": "List of questions the child got wrong for the Review mission."
+        },
+        "lastSessionDate": { "type": "string", "format": "date-time", "description": "Last time they completed a mission." },
+        "currentMission": { "type": "string", "enum": ["Maths", "English", "Puzzles", "Review", "Completed"] },
+        "questionCount": { "type": "integer", "description": "How many questions answered today." }
+      },
+      "required": ["uid", "hearts", "stars", "wrongAnswers"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "UserProgress",
+      "description": "Mapping of each child's progress by their unique ID."
+    }
+  }
+}
